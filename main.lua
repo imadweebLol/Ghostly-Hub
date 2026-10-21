@@ -3,10 +3,17 @@ if game.CoreGui:FindFirstChild("Orion") then
     game.CoreGui.Orion:Destroy()
 end
 
--- FIXED: Official raw public source for the Orion UI Library
-local OrionLib = loadstring(game:HttpGet(('https://githubusercontent.com')))()
+-- Safe load for Orion Library UI
+local success, OrionLib = pcall(function()
+    return loadstring(game:HttpGet('https://githubusercontent.com'))()
+end)
 
--- Create the main window with your requested Ghostly Dark/Purple aesthetic
+if not success or not OrionLib then
+    warn("Ghostly Hub Error: Failed to load Orion UI Library framework.")
+    return
+end
+
+-- Create the main window with a Dark/Purple aesthetic
 local Window = OrionLib:MakeWindow({
     Name = "Ghostly Hub 👻", 
     HidePremium = false, 
@@ -17,12 +24,12 @@ local Window = OrionLib:MakeWindow({
 
 -- Applied custom Dark & Vibrant Purple theme profile
 OrionLib.Themes["Default"] = {
-    Main = Color3.fromRGB(15, 15, 15),       -- Deep black background
-    Header = Color3.fromRGB(10, 10, 10),     -- Darker header border
-    Accent = Color3.fromRGB(138, 43, 226),   -- Vibrant Purple accent
-    LightContrast = Color3.fromRGB(30, 30, 30), -- Dark grey buttons
+    Main = Color3.fromRGB(15, 15, 15),       
+    Header = Color3.fromRGB(10, 10, 10),     
+    Accent = Color3.fromRGB(138, 43, 226),   
+    LightContrast = Color3.fromRGB(30, 30, 30), 
     DarkContrast = Color3.fromRGB(5, 5, 5),
-    TextColor = Color3.fromRGB(240, 240, 240)  -- Clear white text
+    TextColor = Color3.fromRGB(240, 240, 240)  
 }
 
 -- ==================== MAIN TAB ====================
@@ -34,7 +41,6 @@ local MainTab = Window:MakeTab({
 
 MainTab:AddParagraph("Welcome to Ghostly Hub", "Your customized interface for execution.")
 
--- Universal Walkspeed Feature
 MainTab:AddSlider({
     Name = "Walkspeed Changer",
     Min = 16,
@@ -61,16 +67,24 @@ local ScriptTab = Window:MakeTab({
 ScriptTab:AddButton({
     Name = "MM2 Nexus Updated",
     Callback = function()
-        pcall(function()
-            -- FIXED: Raw public loadstring for MM2 Nexus
-            loadstring(game:HttpGet("https://raw.githubusercontent.com/s-0-a-b/nexus/main/loadstring"))()
+        local scriptSuccess = pcall(function()
+            loadstring(game:HttpGet("https://githubusercontent.com"))()
         end)
-        OrionLib:MakeNotification({
-            Name = "Ghostly Hub",
-            Content = "MM2 Nexus Executed!",
-            Image = "rbxassetid://4483362458",
-            Time = 3
-        })
+        
+        if scriptSuccess then
+            OrionLib:MakeNotification({
+                Name = "Ghostly Hub",
+                Content = "MM2 Nexus Executed!",
+                Image = "rbxassetid://4483362458",
+                Time = 3
+            })
+        else
+            OrionLib:MakeNotification({
+                Name = "Execution Error",
+                Content = "Nexus script link is currently down or patched.",
+                Time = 4
+            })
+        end
     end    
 })
 
@@ -78,16 +92,24 @@ ScriptTab:AddButton({
 ScriptTab:AddButton({
     Name = "Vertex Script",
     Callback = function()
-        pcall(function()
-            -- FIXED: Raw public loadstring for Vertex MM2 Hub
-            loadstring(game:HttpGet('https://raw.smokingscripts.org/vertex.lua'))()
+        local scriptSuccess = pcall(function()
+            loadstring(game:HttpGet('https://smokingscripts.org'))()
         end)
-        OrionLib:MakeNotification({
-            Name = "Ghostly Hub",
-            Content = "Vertex Executed!",
-            Image = "rbxassetid://4483362458",
-            Time = 3
-        })
+        
+        if scriptSuccess then
+            OrionLib:MakeNotification({
+                Name = "Ghostly Hub",
+                Content = "Vertex Executed!",
+                Image = "rbxassetid://4483362458",
+                Time = 3
+            })
+        else
+            OrionLib:MakeNotification({
+                Name = "Execution Error",
+                Content = "Vertex script link is currently down or patched.",
+                Time = 4
+            })
+        end
     end    
 })
 
@@ -95,16 +117,24 @@ ScriptTab:AddButton({
 ScriptTab:AddButton({
     Name = "Infinite Yield Admin",
     Callback = function()
-        pcall(function()
-            -- FIXED: Official raw GitHub source path for Infinite Yield Admin
+        local scriptSuccess = pcall(function()
             loadstring(game:HttpGet("https://githubusercontent.com"))()
         end)
-        OrionLib:MakeNotification({
-            Name = "Ghostly Hub",
-            Content = "Infinite Yield Executed!",
-            Image = "rbxassetid://4483362458",
-            Time = 3
-        })
+        
+        if scriptSuccess then
+            OrionLib:MakeNotification({
+                Name = "Ghostly Hub",
+                Content = "Infinite Yield Executed!",
+                Image = "rbxassetid://4483362458",
+                Time = 3
+            })
+        else
+            OrionLib:MakeNotification({
+                Name = "Execution Error",
+                Content = "Infinite Yield source could not be reached.",
+                Time = 4
+            })
+        end
     end    
 })
 
